@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop | Rukn Al Hamasat — iPhone Store, Sharjah</title>
+<meta name="description" content="Browse new and used iPhones and accessories at Rukn Al Hamasat, Al Manakh, Sharjah. Search, filter and order on WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Cairo:wght@400;600;700;800&family=Noto+Sans+Malayalam:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="lang-en">
+
+<header class="topbar">
+  <div class="wrap inner">
+    <a class="brand" href="index.html" style="cursor:pointer;">
+      <div class="mark">RH<img src="images/logo/logo.png" alt="" loading="lazy" onerror="this.remove()"></div>
+      <span data-i18n="brandName">Rukn Al Hamasat</span>
+    </a>
+    <nav class="mainnav">
+      <a href="index.html" data-i18n="navHome">Home</a>
+      <a href="shop.html" class="active" data-i18n="navShop">Shop</a>
+      <a href="index.html#services" data-i18n="navServices">Services</a>
+      <a href="index.html#branch" data-i18n="navBranch">Branch</a>
+      <a href="index.html#contact" data-i18n="navContact">Contact</a>
+    </nav>
+    <div class="topbar-right">
+      <div class="langswitch">
+        <button data-lang="en" class="active">EN</button>
+        <button data-lang="ar">عربي</button>
+        <button data-lang="ml">മല</button>
+      </div>
+      <a class="btn btn-wa" id="headerWaBtn" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21h.005c5.46 0 9.9-4.45 9.9-9.92 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+        <span data-i18n="btnChatWa">Chat on WhatsApp</span>
+        <span class="btn-arrow"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <button class="cart-btn" id="cartBtn" type="button" aria-label="Cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8h12l1 12H5L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+        <span class="cart-badge hide" id="cartBadge">0</span>
+      </button>
+      <button class="hamburger" id="hamburgerBtn" type="button" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+<aside class="mobile-menu" id="mobileMenu" aria-label="Menu">
+  <div class="menu-head">
+    <span class="t" data-i18n="brandName">Rukn Al Hamasat</span>
+    <button class="menu-close" id="menuCloseBtn" type="button" aria-label="Close menu">&times;</button>
+  </div>
+  <nav class="menu-links">
+    <a href="index.html" data-i18n="navHome">Home</a>
+    <a href="shop.html" data-i18n="navShop">Shop</a>
+    <a href="index.html#services" data-i18n="navServices">Services</a>
+    <a href="index.html#branch" data-i18n="navBranch">Branch</a>
+    <a href="index.html#contact" data-i18n="navContact">Contact</a>
+  </nav>
+  <div class="menu-foot">
+    <div class="langswitch">
+      <button data-lang="en" class="active">EN</button>
+      <button data-lang="ar">عربي</button>
+      <button data-lang="ml">മല</button>
+    </div>
+    <a class="btn btn-wa" id="menuWaBtn" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21h.005c5.46 0 9.9-4.45 9.9-9.92 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+      <span data-i18n="btnChatWa">Chat on WhatsApp</span>
+    </a>
+  </div>
+</aside>
+
+<div class="cart-overlay" id="cartOverlay"></div>
+<aside class="cart-drawer" id="cartDrawer">
+  <div class="cart-head">
+    <h3 data-i18n="cartTitle">Your cart</h3>
+    <button class="cart-close" id="cartCloseBtn" type="button" aria-label="Close">&times;</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-foot">
+    <a class="btn btn-wa" id="cartOrderBtn" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21h.005c5.46 0 9.9-4.45 9.9-9.92 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+      <span data-i18n="cartOrderBtn">Order via WhatsApp</span>
+    </a>
+  </div>
+</aside>
+
+<section id="shop" style="padding-top:56px; border-bottom:none;">
+  <div class="wrap">
+    <div class="eyebrow" style="justify-content:center;"><span data-i18n="kickerShop">Browse the store</span></div>
+    <h2 class="shop-title" data-i18n="titleShop">Shop</h2>
+    <p class="sec-sub" data-i18n="descFeatured">Browse our available iPhones and accessories. Tap a product to view details or order on WhatsApp.</p>
+    <div class="shop-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input type="text" id="shopSearch" data-i18n-ph="searchPh" placeholder="Search products...">
+    </div>
+    <div class="filter-pills" id="filterPills">
+      <button type="button" class="active" data-filter="all" data-i18n="filterAll">All</button>
+      <button type="button" data-filter="new" data-i18n="filterNew">New iPhones</button>
+      <button type="button" data-filter="used" data-i18n="filterUsed">Used iPhones</button>
+      <button type="button" data-filter="accessories" data-i18n="filterAcc">Accessories</button>
+    </div>
+    <div class="grid4p" id="productGrid"></div>
+    <p class="no-results" id="noResults" data-i18n="noResults">No products match your search.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <h3 data-i18n="brandName">Rukn Al Hamasat</h3>
+        <p data-i18n="footerDesc">New & used iPhones, repairs and accessories — Al Manakh, Sharjah, UAE.</p>
+      </div>
+      <div class="foot-col">
+        <h4 data-i18n="footBranchHead">Branch</h4>
+        <div class="line" data-i18n="branchName3">Sharjah</div>
+      </div>
+      <div class="foot-col">
+        <h4 data-i18n="footHoursHead">Hours &amp; contact</h4>
+        <div class="line" data-i18n="footerHoursLine">Every day: from 10:00 AM</div>
+        <a class="wa-link" id="footerWaBtn" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21h.005c5.46 0 9.9-4.45 9.9-9.92 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+          <span data-i18n="btnWaUs">WhatsApp us</span>
+        </a>
+        <div class="line">+971 55 949 6507</div>
+      </div>
+    </div>
+    <div class="foot-bottom" data-i18n="footerCopy">© 2026 Rukn Al Hamasat. All rights reserved.</div>
+  </div>
+</footer>
+
+<a class="float-wa" id="floatWaBtn" href="#" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21h.005c5.46 0 9.9-4.45 9.9-9.92 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm5.8 14.08c-.24.68-1.4 1.3-1.94 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.17-4.94-4.36-.14-.19-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.27-.29.58-.36.78-.36.19 0 .39 0 .56.01.18.01.42-.07.66.5.24.58.82 2 .89 2.14.07.15.12.31.02.5-.09.19-.14.31-.28.48-.14.16-.29.36-.42.49-.14.14-.28.29-.12.57.16.28.72 1.19 1.55 1.93 1.06.94 1.96 1.24 2.24 1.38.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.19-.27.37-.22.62-.13.25.09 1.61.76 1.88.9.28.14.46.21.53.32.07.12.07.68-.17 1.36z"/></svg>
+</a>
+
+<script src="images/images.js"></script>
+<script>
+const WA = "971559496507";
+const waLink = (msg) => `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
+
+const ICONS = {
+  phoneNew: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg>`,
+  phoneUsed: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/><path d="M4 8l1.5 1.5M20 8l-1.5 1.5" stroke-dasharray="2 2"/></svg>`,
+  swap: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>`,
+  headphones: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>`,
+  wrench: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a4 4 0 1 0-5.4 5.4L2 19l3 3 7.3-7.3a4 4 0 0 0 5.4-5.4l-2.8 2.8-2-2 2.8-2.8z"/></svg>`,
+  truck: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="6" width="14" height="12" rx="1.5"/><path d="M15 10h4l3 3v5h-7z"/><circle cx="6" cy="19" r="1.6"/><circle cx="17.5" cy="19" r="1.6"/></svg>`,
+  bag: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8h12l1 12H5L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>`,
+  check: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.6 1.5L18 3l1 3.4 2.5 2L21 12l.5 3.6-2.5 2-1 3.4-3.4-.5L12 22l-2.6-1.5L6 21l-1-3.4-2.5-2L3 12l-.5-3.6 2.5-2L6 3l3.4.5z"/><path d="M9 12l2 2 4-4"/></svg>`,
+  bolt: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>`,
+  shield: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg>`,
+  plus: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>`,
+  chevron: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>`
+};
+
+const translations = {
+  en: {
+    dir:"ltr",
+    brandName:"Rukn Al Hamasat",
+    navHome:"Home", navShop:"Shop", navServices:"Services", navBranch:"Branch", navContact:"Contact",
+    btnChatWa:"Chat on WhatsApp", btnBrowse:"Browse shop", btnWaShort:"WhatsApp", btnWaUs:"WhatsApp us",
+    heroPill:"New & used iPhones · Repairs · Accessories",
+    heroTitle:"Your trusted iPhone destination", heroPlace:"Sharjah.",
+    trustLine1:"Trusted. Fast. Genuine.", trustLine2:"Welcome to Rukn Al Hamasat.",
+    heroDesc:"New and used iPhones, trade-ins and expert repairs — all in one place in Al Manakh, Sharjah.",
+    seriesLabel:"iPhone series we carry",
+    statBranch:"Branch in Sharjah", statDevices:"Devices sold & serviced", statRepair:"Same-day repairs", statGenuine:"Genuine parts",
+    titleFeatured:"Featured iPhones", descFeatured:"Browse our available iPhones and accessories. Tap a product to view details or order on WhatsApp.", viewAll:"View all on WhatsApp",
+    kickerShop:"Browse the store", titleShop:"Shop", searchPh:"Search products...",
+    filterAll:"All", filterNew:"New iPhones", filterUsed:"Used iPhones", filterAcc:"Accessories", noResults:"No products match your search.",
+    kickerCategory:"What we offer", titleCategory:"Shop by category", subCategory:"Browse what's available in-store — message us on WhatsApp for live stock and pricing.",
+    catNewTitle:"New iPhones", catNewDesc:"Latest models, sealed box",
+    catUsedTitle:"Used iPhones", catUsedDesc:"Quality checked, ready to go",
+    catAccTitle:"Accessories", catAccDesc:"Cases, chargers, AirPods & more",
+    catTradeTitle:"Trade-in", catTradeDesc:"Swap your old phone for credit",
+    kickerServices:"How we help", titleServices:"Services built around you", subServices:"From repairs to trade-ins, we make owning an iPhone simple.",
+    svcRepairTitle:"Device repair", svcRepairDesc:"Screen, battery and general repairs handled with care.",
+    svcTradeTitle:"We buy & trade-in phones", svcTradeDesc:"Bring your old iPhone — trade it in or sell it to us directly.",
+    svcDeliveryTitle:"Delivery", svcDeliveryDesc:"Can't make it in-store? We deliver across Sharjah and nearby areas.",
+    svcAccTitle:"Accessories", svcAccDesc:"A wide range of cases, chargers and accessories for your iPhone.",
+    kickerWhy:"Why us", titleWhy:"Why customers choose Rukn Al Hamasat", subWhy:"",
+    whyGenuine:"Genuine products", whyFast:"Fast, reliable repairs", whyTrade:"Best trade-in value", whyDelivery:"Delivery in Sharjah",
+    kickerVisit:"Visit us", titleBranch:"Find the shop", subBranch:"One location in Sharjah — drop by or get directions below.",
+    branchName:"Sharjah", branchName2:"Sharjah", branchName3:"Sharjah",
+    branchAddr:"Al Manakh, Hay Al Qasimiah, Sharjah, UAE", btnDirections:"Get directions",
+    hoursLabel:"Opening hours", hoursEveryDay:"Every day", hoursEveryDayTime:"from 10:00 AM",
+    kickerFaq:"Got questions?", titleFaq:"Frequently asked questions",
+    faq1q:"Where are you located?", faq1a:"We're in Al Manakh, Hay Al Qasimiah, Sharjah, UAE. See the Branch section above for directions.",
+    faq2q:"What are your opening hours?", faq2a:"We're open every day from 10:00 AM. Message us on WhatsApp to confirm closing time or holiday hours.",
+    faq3q:"Do you sell used iPhones?", faq3a:"Yes — we stock quality-checked used iPhones alongside new ones, all clearly marked.",
+    faq4q:"Do you repair phones?", faq4a:"Yes, we handle screen, battery and general repairs, most done same-day.",
+    faq5q:"Do you offer delivery?", faq5a:"Yes, we can deliver within Sharjah and nearby areas — ask us on WhatsApp for details.",
+    faq6q:"How can I contact you?", faq6a:"The fastest way is WhatsApp at +971 55 949 6507. You can also call the same number.",
+    kickerContact:"Get in touch", titleContact:"Message us on WhatsApp — we reply fast", subContact:"Questions about stock, repairs or trade-ins? Our team is just a message away.",
+    footerDesc:"New & used iPhones, repairs and accessories — Al Manakh, Sharjah, UAE.",
+    footBranchHead:"Branch", footHoursHead:"Hours & contact", footerHoursLine:"Every day: from 10:00 AM",
+    footerCopy:"© 2026 Rukn Al Hamasat. All rights reserved.",
+    waHero:"Hi, I'd like to know more about Rukn Al Hamasat.",
+    waViewAll:"Hi, can you show me what iPhones you have in stock?",
+    waBranch:"Hi, I have a question about your Sharjah branch.",
+    cartTitle:"Your cart", cartEmpty:"Your cart is empty.", cartOrderBtn:"Order via WhatsApp", cartMsgIntro:"Hi, I'd like to order:",
+    marqueeWords:["NEW IPHONES","USED PHONES","REPAIRS","TRADE-IN","ACCESSORIES","DELIVERY"],
+    products:[
+      {id:"iphone-15-pro-max", badge:"new", filterCat:"new", cat:"New iPhones", name:"iPhone 15 Pro Max 256GB", price:"AED 4,299", icon:"phoneNew"},
+      {id:"iphone-15", badge:"new", filterCat:"new", cat:"New iPhones", name:"iPhone 15 128GB", price:"AED 2,899", icon:"phoneNew"},
+      {id:"iphone-14-pro-max", badge:"used", filterCat:"used", cat:"Used iPhones", name:"iPhone 14 Pro Max 256GB", price:"AED 2,199", icon:"phoneUsed"},
+      {id:"iphone-13-pro", badge:"used", filterCat:"used", cat:"Used iPhones", name:"iPhone 13 Pro 256GB", price:"AED 1,399", icon:"phoneUsed"},
+      {id:"iphone-13-pro-max", badge:"used", filterCat:"used", cat:"Used iPhones", name:"iPhone 13 Pro Max 256GB", price:"AED 1,699", icon:"phoneUsed"},
+      {id:"iphone-12", badge:"used", filterCat:"used", cat:"Used iPhones", name:"iPhone 12 128GB", price:"AED 899", icon:"phoneUsed"},
+      {id:"iphone-se", badge:"new", filterCat:"new", cat:"New iPhones", name:"iPhone SE 64GB", price:"AED 1,399", icon:"phoneNew"},
+      {id:"iphone-11-pro", badge:"used", filterCat:"used", cat:"Used iPhones", name:"iPhone 11 Pro 256GB", price:"AED 849", icon:"phoneUsed"},
+      {id:"airpods-pro-2", badge:"new", filterCat:"accessories", cat:"Accessories", name:"AirPods Pro 2", price:"AED 749", icon:"headphones"},
+      {id:"magsafe-charger", badge:"new", filterCat:"accessories", cat:"Accessories", name:"MagSafe Charger", price:"AED 129", icon:"bolt"},
+      {id:"silicone-case", badge:"new", filterCat:"accessories", cat:"Accessories", name:"Silicone Case", price:"AED 89", icon:"bag"},
+      {id:"usb-c-charger", badge:"new", filterCat:"accessories", cat:"Accessories", name:"USB-C Fast Charger", price:"AED 99", icon:"bolt"}
+    ]
+  },
+  ar: {
+    dir:"rtl",
+    brandName:"ركن الحماسات",
+    navHome:"الرئيسية", navShop:"المتجر", navServices:"الخدمات", navBranch:"الفرع", navContact:"تواصل",
+    btnChatWa:"راسلنا واتساب", btnBrowse:"تصفح المتجر", btnWaShort:"واتساب", btnWaUs:"راسلنا واتساب",
+    heroPill:"آيفون جديد ومستعمل · صيانة · إكسسوارات",
+    heroTitle:"وجهتك الموثوقة لأجهزة الآيفون", heroPlace:"الشارقة.",
+    trustLine1:"موثوق. سريع. أصلي.", trustLine2:"مرحباً بكم في ركن الحماسات.",
+    heroDesc:"آيفون جديد ومستعمل، استبدال الأجهزة، وصيانة احترافية — كل ذلك في مكان واحد في المناخ، الشارقة.",
+    seriesLabel:"سلاسل الآيفون المتوفرة",
+    statBranch:"فرع في الشارقة", statDevices:"جهاز تم بيعه وصيانته", statRepair:"صيانة في نفس اليوم", statGenuine:"قطع غيار أصلية",
+    titleFeatured:"أجهزة آيفون مميزة", descFeatured:"تصفح أجهزة الآيفون والإكسسوارات المتوفرة لدينا. اضغط على أي منتج لعرض التفاصيل أو الطلب عبر واتساب.", viewAll:"عرض الكل عبر واتساب",
+    kickerShop:"تصفح المتجر", titleShop:"المتجر", searchPh:"ابحث عن المنتجات...",
+    filterAll:"الكل", filterNew:"آيفون جديد", filterUsed:"آيفون مستعمل", filterAcc:"إكسسوارات", noResults:"لا توجد منتجات مطابقة لبحثك.",
+    kickerCategory:"ماذا نقدم", titleCategory:"تسوق حسب الفئة", subCategory:"تصفح ما هو متوفر في المحل — راسلنا على واتساب لمعرفة المخزون والأسعار الحالية.",
+    catNewTitle:"آيفون جديد", catNewDesc:"أحدث الطرازات، بعلبة مغلقة",
+    catUsedTitle:"آيفون مستعمل", catUsedDesc:"مفحوص الجودة وجاهز للاستخدام",
+    catAccTitle:"إكسسوارات", catAccDesc:"أغطية، شواحن، سماعات وأكثر",
+    catTradeTitle:"استبدال", catTradeDesc:"استبدل جهازك القديم مقابل رصيد",
+    kickerServices:"كيف نساعدك", titleServices:"خدمات مصممة من أجلك", subServices:"من الصيانة إلى الاستبدال، نجعل امتلاك آيفون أمراً بسيطاً.",
+    svcRepairTitle:"صيانة الأجهزة", svcRepairDesc:"إصلاح الشاشة والبطارية والأعطال العامة بعناية.",
+    svcTradeTitle:"نشتري ونستبدل الأجهزة", svcTradeDesc:"أحضر جهازك القديم — استبدله أو بعه لنا مباشرة.",
+    svcDeliveryTitle:"التوصيل", svcDeliveryDesc:"لا تستطيع الحضور؟ نوصل داخل الشارقة والمناطق القريبة.",
+    svcAccTitle:"إكسسوارات", svcAccDesc:"تشكيلة واسعة من الأغطية والشواحن والإكسسوارات لجهازك.",
+    kickerWhy:"لماذا نحن", titleWhy:"لماذا يختار عملاؤنا ركن الحماسات", subWhy:"",
+    whyGenuine:"منتجات أصلية", whyFast:"صيانة سريعة وموثوقة", whyTrade:"أفضل قيمة استبدال", whyDelivery:"توصيل داخل الشارقة",
+    kickerVisit:"زورونا", titleBranch:"موقع المحل", subBranch:"موقع واحد في الشارقة — تفضل بالزيارة أو احصل على الاتجاهات أدناه.",
+    branchName:"الشارقة", branchName2:"الشارقة", branchName3:"الشارقة",
+    branchAddr:"المناخ، حي القاسمية، الشارقة، الإمارات", btnDirections:"احصل على الاتجاهات",
+    hoursLabel:"أوقات العمل", hoursEveryDay:"يومياً", hoursEveryDayTime:"من الساعة 10:00 صباحاً",
+    kickerFaq:"لديك أسئلة؟", titleFaq:"الأسئلة الشائعة",
+    faq1q:"أين يقع المحل؟", faq1a:"نحن في المناخ، حي القاسمية، الشارقة، الإمارات. راجع قسم الفرع أعلاه للاتجاهات.",
+    faq2q:"ما هي أوقات العمل؟", faq2a:"نفتح يومياً من الساعة 10:00 صباحاً. راسلنا على واتساب لتأكيد وقت الإغلاق أو أوقات العطلات.",
+    faq3q:"هل تبيعون آيفون مستعمل؟", faq3a:"نعم — لدينا آيفون مستعمل مفحوص الجودة إلى جانب الأجهزة الجديدة، وكلها موضحة بوضوح.",
+    faq4q:"هل تقومون بإصلاح الأجهزة؟", faq4a:"نعم، نقوم بإصلاح الشاشة والبطارية والأعطال العامة، ومعظمها يتم في نفس اليوم.",
+    faq5q:"هل تقدمون خدمة التوصيل؟", faq5a:"نعم، يمكننا التوصيل داخل الشارقة والمناطق القريبة — اسألنا على واتساب للتفاصيل.",
+    faq6q:"كيف يمكنني التواصل معكم؟", faq6a:"أسرع طريقة هي واتساب على +971 55 949 6507. يمكنك أيضاً الاتصال على نفس الرقم.",
+    kickerContact:"تواصل معنا", titleContact:"راسلنا على واتساب — نرد بسرعة", subContact:"أسئلة حول المخزون أو الصيانة أو الاستبدال؟ فريقنا على بعد رسالة واحدة.",
+    footerDesc:"آيفون جديد ومستعمل، صيانة وإكسسوارات — المناخ، الشارقة، الإمارات.",
+    footBranchHead:"الفرع", footHoursHead:"الأوقات والتواصل", footerHoursLine:"يومياً: من الساعة 10:00 صباحاً",
+    footerCopy:"© 2026 ركن الحماسات. جميع الحقوق محفوظة.",
+    waHero:"مرحباً، أرغب في معرفة المزيد عن ركن الحماسات.",
+    waViewAll:"مرحباً، هل يمكن أن تريني الأجهزة المتوفرة لديكم؟",
+    waBranch:"مرحباً، لدي سؤال عن فرعكم في الشارقة.",
+    cartTitle:"سلة التسوق", cartEmpty:"سلة التسوق فارغة.", cartOrderBtn:"اطلب عبر واتساب", cartMsgIntro:"مرحباً، أرغب في طلب:",
+    marqueeWords:["آيفون جديد","آيفون مستعمل","صيانة","استبدال","إكسسوارات","توصيل"],
+    products:[
+      {id:"iphone-15-pro-max", badge:"new", filterCat:"new", cat:"آيفون جديد", name:"آيفون 15 برو ماكس 256GB", price:"4,299 درهم", icon:"phoneNew"},
+      {id:"iphone-15", badge:"new", filterCat:"new", cat:"آيفون جديد", name:"آيفون 15 128GB", price:"2,899 درهم", icon:"phoneNew"},
+      {id:"iphone-14-pro-max", badge:"used", filterCat:"used", cat:"آيفون مستعمل", name:"آيفون 14 برو ماكس 256GB", price:"2,199 درهم", icon:"phoneUsed"},
+      {id:"iphone-13-pro", badge:"used", filterCat:"used", cat:"آيفون مستعمل", name:"آيفون 13 برو 256GB", price:"1,399 درهم", icon:"phoneUsed"},
+      {id:"iphone-13-pro-max", badge:"used", filterCat:"used", cat:"آيفون مستعمل", name:"آيفون 13 برو ماكس 256GB", price:"1,699 درهم", icon:"phoneUsed"},
+      {id:"iphone-12", badge:"used", filterCat:"used", cat:"آيفون مستعمل", name:"آيفون 12 128GB", price:"899 درهم", icon:"phoneUsed"},
+      {id:"iphone-se", badge:"new", filterCat:"new", cat:"آيفون جديد", name:"آيفون SE 64GB", price:"1,399 درهم", icon:"phoneNew"},
+      {id:"iphone-11-pro", badge:"used", filterCat:"used", cat:"آيفون مستعمل", name:"آيفون 11 برو 256GB", price:"849 درهم", icon:"phoneUsed"},
+      {id:"airpods-pro-2", badge:"new", filterCat:"accessories", cat:"إكسسوارات", name:"إيربودز برو 2", price:"749 درهم", icon:"headphones"},
+      {id:"magsafe-charger", badge:"new", filterCat:"accessories", cat:"إكسسوارات", name:"شاحن ماج سيف", price:"129 درهم", icon:"bolt"},
+      {id:"silicone-case", badge:"new", filterCat:"accessories", cat:"إكسسوارات", name:"جراب سيليكون", price:"89 درهم", icon:"bag"},
+      {id:"usb-c-charger", badge:"new", filterCat:"accessories", cat:"إكسسوارات", name:"شاحن USB-C سريع", price:"99 درهم", icon:"bolt"}
+    ]
+  },
+  ml: {
+    dir:"ltr",
+    brandName:"റുക്ൻ അൽ ഹമസാത്ത്",
+    navHome:"ഹോം", navShop:"ഷോപ്പ്", navServices:"സേവനങ്ങൾ", navBranch:"ബ്രാഞ്ച്", navContact:"ബന്ധപ്പെടുക",
+    btnChatWa:"വാട്സാപ്പ് ചെയ്യുക", btnBrowse:"ഷോപ്പ് കാണുക", btnWaShort:"വാട്സാപ്പ്", btnWaUs:"വാട്സാപ്പ് ചെയ്യുക",
+    heroPill:"പുതിയതും ഉപയോഗിച്ചതുമായ ഐഫോൺ · റിപ്പയർ · ആക്സസറീസ്",
+    heroTitle:"നിങ്ങളുടെ വിശ്വസ്ത ഐഫോൺ ഇടം", heroPlace:"ഷാർജ.",
+    trustLine1:"വിശ്വസനീയം. വേഗതയുള്ളത്. ജെന്യുവിൻ.", trustLine2:"റുക്ൻ അൽ ഹമസാത്തിലേക്ക് സ്വാഗതം.",
+    heroDesc:"പുതിയതും ഉപയോഗിച്ചതുമായ ഐഫോണുകൾ, ട്രേഡ്-ഇൻ, വിദഗ്ധ റിപ്പയർ — എല്ലാം അൽ മനാഖ്, ഷാർജയിൽ ഒരിടത്ത്.",
+    seriesLabel:"ലഭ്യമായ ഐഫോൺ സീരീസുകൾ",
+    statBranch:"ഷാർജയിൽ ബ്രാഞ്ച്", statDevices:"വിറ്റതും സർവീസ് ചെയ്തതുമായ ഉപകരണങ്ങൾ", statRepair:"അതേ ദിവസം റിപ്പയർ", statGenuine:"ജെന്യുവിൻ പാർട്സ്",
+    titleFeatured:"തിരഞ്ഞെടുത്ത ഐഫോണുകൾ", descFeatured:"ഞങ്ങളുടെ ലഭ്യമായ ഐഫോണുകളും ആക്സസറീസും കാണുക. വിശദാംശങ്ങൾക്കോ വാട്സാപ്പിൽ ഓർഡർ ചെയ്യാനോ ഏതെങ്കിലും ഉൽപ്പന്നത്തിൽ ടാപ്പ് ചെയ്യുക.", viewAll:"വാട്സാപ്പിൽ എല്ലാം കാണുക",
+    kickerShop:"സ്റ്റോർ പരിശോധിക്കുക", titleShop:"ഷോപ്പ്", searchPh:"ഉൽപ്പന്നങ്ങൾ തിരയുക...",
+    filterAll:"എല്ലാം", filterNew:"പുതിയ ഐഫോൺ", filterUsed:"ഉപയോഗിച്ച ഐഫോൺ", filterAcc:"ആക്സസറീസ്", noResults:"നിങ്ങളുടെ തിരയലുമായി പൊരുത്തപ്പെടുന്ന ഉൽപ്പന്നങ്ങളില്ല.",
+    kickerCategory:"ഞങ്ങൾ വാഗ്ദാനം ചെയ്യുന്നത്", titleCategory:"വിഭാഗം അനുസരിച്ച് ഷോപ്പ് ചെയ്യുക", subCategory:"സ്റ്റോറിൽ ലഭ്യമായത് നോക്കുക — തത്സമയ സ്റ്റോക്കിനും വിലയ്ക്കും വാട്സാപ്പിൽ സന്ദേശം അയക്കുക.",
+    catNewTitle:"പുതിയ ഐഫോൺ", catNewDesc:"ഏറ്റവും പുതിയ മോഡലുകൾ, സീൽഡ് ബോക്സ്",
+    catUsedTitle:"ഉപയോഗിച്ച ഐഫോൺ", catUsedDesc:"ഗുണനിലവാരം പരിശോധിച്ചത്, ഉപയോഗിക്കാൻ തയ്യാർ",
+    catAccTitle:"ആക്സസറീസ്", catAccDesc:"കേസുകൾ, ചാർജറുകൾ, എയർപോഡ്സ് എന്നിവയും മറ്റും",
+    catTradeTitle:"ട്രേഡ്-ഇൻ", catTradeDesc:"നിങ്ങളുടെ പഴയ ഫോൺ ക്രെഡിറ്റിന് പകരം നൽകുക",
+    kickerServices:"ഞങ്ങൾ എങ്ങനെ സഹായിക്കുന്നു", titleServices:"നിങ്ങൾക്കായി രൂപകൽപ്പന ചെയ്ത സേവനങ്ങൾ", subServices:"റിപ്പയർ മുതൽ ട്രേഡ്-ഇൻ വരെ, ഐഫോൺ ഉപയോഗം ഞങ്ങൾ ലളിതമാക്കുന്നു.",
+    svcRepairTitle:"ഡിവൈസ് റിപ്പയർ", svcRepairDesc:"സ്ക്രീൻ, ബാറ്ററി, പൊതുവായ റിപ്പയറുകൾ ശ്രദ്ധയോടെ കൈകാര്യം ചെയ്യുന്നു.",
+    svcTradeTitle:"ഞങ്ങൾ ഫോണുകൾ വാങ്ങുകയും ട്രേഡ്-ഇൻ ചെയ്യുകയും ചെയ്യുന്നു", svcTradeDesc:"നിങ്ങളുടെ പഴയ ഐഫോൺ കൊണ്ടുവരൂ — ട്രേഡ്-ഇൻ ചെയ്യുകയോ നേരിട്ട് വിൽക്കുകയോ ചെയ്യാം.",
+    svcDeliveryTitle:"ഡെലിവറി", svcDeliveryDesc:"സ്റ്റോറിൽ വരാൻ കഴിയുന്നില്ലേ? ഷാർജയിലും സമീപ പ്രദേശങ്ങളിലും ഞങ്ങൾ ഡെലിവർ ചെയ്യുന്നു.",
+    svcAccTitle:"ആക്സസറീസ്", svcAccDesc:"നിങ്ങളുടെ ഐഫോണിനുള്ള കേസുകൾ, ചാർജറുകൾ, ആക്സസറീസ് എന്നിവയുടെ വിശാലമായ ശ്രേണി.",
+    kickerWhy:"ഞങ്ങളെ എന്തുകൊണ്ട്", titleWhy:"ഉപഭോക്താക്കൾ റുക്ൻ അൽ ഹമസാത്ത് തിരഞ്ഞെടുക്കുന്നത് എന്തുകൊണ്ട്", subWhy:"",
+    whyGenuine:"ജെന്യുവിൻ ഉൽപ്പന്നങ്ങൾ", whyFast:"വേഗതയുള്ളതും വിശ്വസനീയവുമായ റിപ്പയർ", whyTrade:"മികച്ച ട്രേഡ്-ഇൻ മൂല്യം", whyDelivery:"ഷാർജയിൽ ഡെലിവറി",
+    kickerVisit:"ഞങ്ങളെ സന്ദർശിക്കുക", titleBranch:"ഷോപ്പ് കണ്ടെത്തുക", subBranch:"ഷാർജയിൽ ഒരു ലൊക്കേഷൻ — സന്ദർശിക്കുക അല്ലെങ്കിൽ താഴെയുള്ള ദിശകൾ നേടുക.",
+    branchName:"ഷാർജ", branchName2:"ഷാർജ", branchName3:"ഷാർജ",
+    branchAddr:"അൽ മനാഖ്, ഹായ് അൽ ഖാസിമിയ്യ, ഷാർജ, യുഎഇ", btnDirections:"ദിശകൾ നേടുക",
+    hoursLabel:"പ്രവർത്തന സമയം", hoursEveryDay:"എല്ലാ ദിവസവും", hoursEveryDayTime:"രാവിലെ 10 മുതൽ",
+    kickerFaq:"ചോദ്യങ്ങളുണ്ടോ?", titleFaq:"പതിവായി ചോദിക്കുന്ന ചോദ്യങ്ങൾ",
+    faq1q:"നിങ്ങൾ എവിടെയാണ് സ്ഥിതി ചെയ്യുന്നത്?", faq1a:"ഞങ്ങൾ അൽ മനാഖ്, ഹായ് അൽ ഖാസിമിയ്യ, ഷാർജ, യുഎഇയിലാണ്. ദിശകൾക്കായി മുകളിലുള്ള ബ്രാഞ്ച് വിഭാഗം കാണുക.",
+    faq2q:"നിങ്ങളുടെ പ്രവർത്തന സമയം എന്താണ്?", faq2a:"ഞങ്ങൾ എല്ലാ ദിവസവും രാവിലെ 10 മണി മുതൽ തുറന്നിരിക്കും. അടയ്ക്കുന്ന സമയമോ അവധി സമയമോ സ്ഥിരീകരിക്കാൻ വാട്സാപ്പിൽ സന്ദേശം അയക്കുക.",
+    faq3q:"നിങ്ങൾ ഉപയോഗിച്ച ഐഫോൺ വിൽക്കുമോ?", faq3a:"അതെ — ഗുണനിലവാരം പരിശോധിച്ച ഉപയോഗിച്ച ഐഫോണുകൾ പുതിയവയ്‌ക്കൊപ്പം ഞങ്ങളുടെ പക്കലുണ്ട്, എല്ലാം വ്യക്തമായി അടയാളപ്പെടുത്തിയിരിക്കുന്നു.",
+    faq4q:"നിങ്ങൾ ഫോണുകൾ റിപ്പയർ ചെയ്യുമോ?", faq4a:"അതെ, ഞങ്ങൾ സ്ക്രീൻ, ബാറ്ററി, പൊതുവായ റിപ്പയറുകൾ കൈകാര്യം ചെയ്യുന്നു, മിക്കതും അതേ ദിവസം തന്നെ പൂർത്തിയാക്കുന്നു.",
+    faq5q:"നിങ്ങൾ ഡെലിവറി നൽകുമോ?", faq5a:"അതെ, ഷാർജയ്ക്കുള്ളിലും സമീപ പ്രദേശങ്ങളിലും ഞങ്ങൾക്ക് ഡെലിവർ ചെയ്യാൻ കഴിയും — വിശദാംശങ്ങൾക്ക് വാട്സാപ്പിൽ ചോദിക്കുക.",
+    faq6q:"നിങ്ങളെ എങ്ങനെ ബന്ധപ്പെടാം?", faq6a:"ഏറ്റവും വേഗതയേറിയ മാർഗ്ഗം +971 55 949 6507 എന്ന നമ്പറിൽ വാട്സാപ്പ് ആണ്. അതേ നമ്പറിൽ വിളിക്കുകയും ചെയ്യാം.",
+    kickerContact:"ബന്ധപ്പെടുക", titleContact:"വാട്സാപ്പിൽ സന്ദേശം അയക്കുക — ഞങ്ങൾ വേഗം മറുപടി നൽകും", subContact:"സ്റ്റോക്ക്, റിപ്പയർ അല്ലെങ്കിൽ ട്രേഡ്-ഇൻ സംബന്ധിച്ച ചോദ്യങ്ങളോ? ഞങ്ങളുടെ ടീം ഒരു സന്ദേശം അകലെയാണ്.",
+    footerDesc:"പുതിയതും ഉപയോഗിച്ചതുമായ ഐഫോണുകൾ, റിപ്പയർ, ആക്സസറീസ് — അൽ മനാഖ്, ഷാർജ, യുഎഇ.",
+    footBranchHead:"ബ്രാഞ്ച്", footHoursHead:"സമയവും ബന്ധപ്പെടലും", footerHoursLine:"എല്ലാ ദിവസവും: രാവിലെ 10 മുതൽ",
+    footerCopy:"© 2026 റുക്ൻ അൽ ഹമസാത്ത്. എല്ലാ അവകാശങ്ങളും നിക്ഷിപ്തം.",
+    waHero:"ഹായ്, റുക്ൻ അൽ ഹമസാത്തിനെക്കുറിച്ച് കൂടുതൽ അറിയാൻ ആഗ്രഹിക്കുന്നു.",
+    waViewAll:"ഹായ്, നിങ്ങളുടെ പക്കൽ ഏതൊക്കെ ഐഫോണുകൾ സ്റ്റോക്കിലുണ്ടെന്ന് കാണിക്കാമോ?",
+    waBranch:"ഹായ്, നിങ്ങളുടെ ഷാർജ ബ്രാഞ്ചിനെക്കുറിച്ച് ഒരു ചോദ്യമുണ്ട്.",
+    cartTitle:"നിങ്ങളുടെ കാർട്ട്", cartEmpty:"നിങ്ങളുടെ കാർട്ട് ശൂന്യമാണ്.", cartOrderBtn:"വാട്സാപ്പ് വഴി ഓർഡർ ചെയ്യുക", cartMsgIntro:"ഹായ്, എനിക്ക് ഇവ ഓർഡർ ചെയ്യണം:",
+    marqueeWords:["പുതിയ ഐഫോൺ","ഉപയോഗിച്ച ഫോൺ","റിപ്പയർ","ട്രേഡ്-ഇൻ","ആക്സസറീസ്","ഡെലിവറി"],
+    products:[
+      {id:"iphone-15-pro-max", badge:"new", filterCat:"new", cat:"പുതിയ ഐഫോൺ", name:"ഐഫോൺ 15 പ്രോ മാക്സ് 256GB", price:"AED 4,299", icon:"phoneNew"},
+      {id:"iphone-15", badge:"new", filterCat:"new", cat:"പുതിയ ഐഫോൺ", name:"ഐഫോൺ 15 128GB", price:"AED 2,899", icon:"phoneNew"},
+      {id:"iphone-14-pro-max", badge:"used", filterCat:"used", cat:"ഉപയോഗിച്ച ഐഫോൺ", name:"ഐഫോൺ 14 പ്രോ മാക്സ് 256GB", price:"AED 2,199", icon:"phoneUsed"},
+      {id:"iphone-13-pro", badge:"used", filterCat:"used", cat:"ഉപയോഗിച്ച ഐഫോൺ", name:"ഐഫോൺ 13 പ്രോ 256GB", price:"AED 1,399", icon:"phoneUsed"},
+      {id:"iphone-13-pro-max", badge:"used", filterCat:"used", cat:"ഉപയോഗിച്ച ഐഫോൺ", name:"ഐഫോൺ 13 പ്രോ മാക്സ് 256GB", price:"AED 1,699", icon:"phoneUsed"},
+      {id:"iphone-12", badge:"used", filterCat:"used", cat:"ഉപയോഗിച്ച ഐഫോൺ", name:"ഐഫോൺ 12 128GB", price:"AED 899", icon:"phoneUsed"},
+      {id:"iphone-se", badge:"new", filterCat:"new", cat:"പുതിയ ഐഫോൺ", name:"ഐഫോൺ SE 64GB", price:"AED 1,399", icon:"phoneNew"},
+      {id:"iphone-11-pro", badge:"used", filterCat:"used", cat:"ഉപയോഗിച്ച ഐഫോൺ", name:"ഐഫോൺ 11 പ്രോ 256GB", price:"AED 849", icon:"phoneUsed"},
+      {id:"airpods-pro-2", badge:"new", filterCat:"accessories", cat:"ആക്സസറീസ്", name:"എയർപോഡ്സ് പ്രോ 2", price:"AED 749", icon:"headphones"},
+      {id:"magsafe-charger", badge:"new", filterCat:"accessories", cat:"ആക്സസറീസ്", name:"മാഗ്സേഫ് ചാർജർ", price:"AED 129", icon:"bolt"},
+      {id:"silicone-case", badge:"new", filterCat:"accessories", cat:"ആക്സസറീസ്", name:"സിലിക്കൺ കേസ്", price:"AED 89", icon:"bag"},
+      {id:"usb-c-charger", badge:"new", filterCat:"accessories", cat:"ആക്സസറീസ്", name:"USB-C ഫാസ്റ്റ് ചാർജർ", price:"AED 99", icon:"bolt"}
+    ]
+  }
+};
+
+let currentLang = "en";
+
+const IMG_EXTS = ["jpg", "jpeg", "png", "webp"];
+// Every filename a product photo may use: id.jpg, id.png ... then id-2.jpg ... up to maxSlot
+function productImageSlots(id, maxSlot){
+  const slots = [];
+  for (let n = 1; n <= maxSlot; n++) {
+    const suffix = n === 1 ? "" : "-" + n;
+    slots.push(IMG_EXTS.map(ext => `images/products/${id}${suffix}.${ext}`));
+  }
+  return slots;
+}
+// Card photo: use the first photo that exists (main photo, or photo 2 if the main one is missing)
+// Photos typed in images/images.js for this product (full paths)
+function listedImages(id){
+  const names = (typeof PRODUCT_IMAGES !== "undefined" && PRODUCT_IMAGES[id]) || [];
+  return names.map(n => "images/products/" + encodeURI(n));
+}
+function wireCardImages(root){
+  root.querySelectorAll("img.art-img[data-pid]").forEach(img => {
+    const id = img.getAttribute("data-pid");
+    const listed = listedImages(id);
+    const list = listed.length ? listed : productImageSlots(id, 1).flat().slice(0, 1);
+    let i = 0;
+    img.onerror = () => { i++; if (i < list.length) img.src = list[i]; else img.remove(); };
+    img.src = list[0];
+  });
+}
+
+function renderDynamic(lang){
+  const t = translations[lang];
+
+  document.getElementById("productGrid").innerHTML = t.products.map(p => `
+    <div class="pcard" data-filtercat="${p.filterCat}" data-name="${p.name.toLowerCase()}">
+      <a class="art" href="product.html?id=${p.id}">
+        <span class="tag ${p.badge}">${p.badge==="new" ? (lang==="ar"?"جديد":lang==="ml"?"പുതിയത്":"New") : (lang==="ar"?"مستعمل":lang==="ml"?"ഉപയോഗിച്ചത്":"Used")}</span>
+        ${ICONS[p.icon]}
+        <img class="art-img" data-pid="${p.id}" alt="" loading="lazy">
+      </a>
+      <div class="body">
+        <div class="cat">${p.cat}</div>
+        <h3><a href="product.html?id=${p.id}">${p.name}</a></h3>
+        <div class="pricerow">
+          <span class="price">${p.price}</span>
+          <button type="button" class="plus" data-name="${p.name.replace(/"/g,'&quot;')}" data-price="${p.price.replace(/"/g,'&quot;')}" aria-label="Add to cart">${ICONS.plus}</button>
+        </div>
+      </div>
+    </div>
+  `).join("");
+  wireCardImages(document.getElementById("productGrid"));
+  document.querySelectorAll("#productGrid .plus").forEach(btn => {
+    btn.addEventListener("click", () => {
+      addToCart(btn.getAttribute("data-name"), btn.getAttribute("data-price"));
+      btn.classList.add("added");
+      setTimeout(() => btn.classList.remove("added"), 700);
+    });
+  });
+
+  document.getElementById("headerWaBtn").href = waLink(t.waHero);
+  document.getElementById("footerWaBtn").href = waLink(t.waHero);
+  document.getElementById("floatWaBtn").href = waLink(t.waHero);
+
+  if (typeof applyShopFilter === "function") applyShopFilter();
+  renderCart();
+}
+
+function setLang(lang){
+  currentLang = lang;
+  const t = translations[lang];
+  document.body.dir = t.dir;
+  document.body.className = "lang-" + lang;
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    if (t[key] !== undefined) el.textContent = t[key];
+  });
+  document.querySelectorAll("[data-i18n-ph]").forEach(el => {
+    const key = el.getAttribute("data-i18n-ph");
+    if (t[key] !== undefined) el.setAttribute("placeholder", t[key]);
+  });
+  document.querySelectorAll(".langswitch button").forEach(b => {
+    b.classList.toggle("active", b.getAttribute("data-lang") === lang);
+  });
+  renderDynamic(lang);
+}
+
+let activeFilter = "all";
+
+function applyShopFilter(){
+  const term = document.getElementById("shopSearch").value.trim().toLowerCase();
+  const cards = document.querySelectorAll("#productGrid .pcard");
+  let visibleCount = 0;
+  cards.forEach(card => {
+    const matchesFilter = activeFilter === "all" || card.getAttribute("data-filtercat") === activeFilter;
+    const matchesSearch = !term || card.getAttribute("data-name").includes(term);
+    const show = matchesFilter && matchesSearch;
+    card.classList.toggle("hide", !show);
+    if (show) visibleCount++;
+  });
+  document.getElementById("noResults").classList.toggle("show", visibleCount === 0);
+}
+
+document.getElementById("shopSearch").addEventListener("input", applyShopFilter);
+
+document.querySelectorAll("#filterPills button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    activeFilter = btn.getAttribute("data-filter");
+    document.querySelectorAll("#filterPills button").forEach(b => b.classList.toggle("active", b === btn));
+    applyShopFilter();
+  });
+});
+
+// Pre-select a category filter when arriving via a link like shop.html?category=used
+const urlParams = new URLSearchParams(window.location.search);
+const requestedCategory = urlParams.get("category");
+if (requestedCategory) {
+  const matchingPill = document.querySelector(`#filterPills button[data-filter="${requestedCategory}"]`);
+  if (matchingPill) {
+    activeFilter = requestedCategory;
+    document.querySelectorAll("#filterPills button").forEach(b => b.classList.toggle("active", b === matchingPill));
+  }
+}
+
+document.querySelectorAll(".langswitch button").forEach(btn => {
+  btn.addEventListener("click", () => setLang(btn.getAttribute("data-lang")));
+});
+
+const hamburgerBtn = document.getElementById("hamburgerBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+const menuOverlay = document.getElementById("menuOverlay");
+function openMenu(){
+  document.getElementById("menuWaBtn").href = document.getElementById("headerWaBtn").href;
+  mobileMenu.classList.add("open");
+  menuOverlay.classList.add("open");
+  document.documentElement.classList.add("menu-open");
+}
+function closeMenu(){
+  mobileMenu.classList.remove("open");
+  menuOverlay.classList.remove("open");
+  document.documentElement.classList.remove("menu-open");
+}
+hamburgerBtn.addEventListener("click", openMenu);
+menuOverlay.addEventListener("click", closeMenu);
+document.getElementById("menuCloseBtn").addEventListener("click", closeMenu);
+mobileMenu.querySelectorAll(".menu-links a").forEach(a => a.addEventListener("click", closeMenu));
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeMenu(); });
+window.addEventListener("resize", () => { if (window.innerWidth > 900) closeMenu(); });
+
+function getCart(){ try{ return JSON.parse(localStorage.getItem("rah_cart") || "[]"); } catch(e){ return []; } }
+function saveCart(cart){ try{ localStorage.setItem("rah_cart", JSON.stringify(cart)); } catch(e){} }
+function addToCart(name, price){
+  const cart = getCart();
+  const existing = cart.find(i => i.name === name);
+  if (existing) existing.qty++; else cart.push({name, price, qty:1});
+  saveCart(cart);
+  renderCart();
+}
+function removeFromCart(idx){
+  const cart = getCart();
+  cart.splice(idx, 1);
+  saveCart(cart);
+  renderCart();
+}
+function cartMessage(){
+  const cart = getCart();
+  const t = translations[currentLang];
+  if (cart.length === 0) return t.waHero;
+  const lines = cart.map(i => `${i.qty}x ${i.name} — ${i.price}`);
+  return t.cartMsgIntro + "\n" + lines.join("\n");
+}
+function renderCart(){
+  const cart = getCart();
+  const t = translations[currentLang];
+  const count = cart.reduce((s,i) => s + i.qty, 0);
+  const badge = document.getElementById("cartBadge");
+  badge.textContent = count;
+  badge.classList.toggle("hide", count === 0);
+  const list = document.getElementById("cartItems");
+  if (cart.length === 0) {
+    list.innerHTML = `<p class="cart-empty">${t.cartEmpty}</p>`;
+  } else {
+    list.innerHTML = cart.map((i, idx) => `
+      <div class="cart-item">
+        <div><div class="cn">${i.name}</div><div class="cp">${i.price} × ${i.qty}</div></div>
+        <button class="cart-remove" type="button" data-idx="${idx}" aria-label="Remove">&times;</button>
+      </div>
+    `).join("");
+    list.querySelectorAll(".cart-remove").forEach(b => b.addEventListener("click", () => removeFromCart(+b.getAttribute("data-idx"))));
+  }
+  document.getElementById("cartOrderBtn").href = waLink(cartMessage());
+}
+const cartBtn = document.getElementById("cartBtn");
+const cartDrawer = document.getElementById("cartDrawer");
+const cartOverlay = document.getElementById("cartOverlay");
+const cartCloseBtn = document.getElementById("cartCloseBtn");
+cartBtn.addEventListener("click", () => { cartDrawer.classList.add("open"); cartOverlay.classList.add("open"); });
+function closeCart(){ cartDrawer.classList.remove("open"); cartOverlay.classList.remove("open"); }
+cartCloseBtn.addEventListener("click", closeCart);
+cartOverlay.addEventListener("click", closeCart);
+
+setLang("en");
+</script>
+
+</body>
+</html>

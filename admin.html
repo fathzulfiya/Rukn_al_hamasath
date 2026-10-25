@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Photo manager | Rukn Al Hamasat</title>
+<style>
+  :root{--bg:#0A0D1F; --panel:#131832; --panel2:#191F3D; --line:#262C4D; --text:#EDEFF7; --dim:#9BA1C4; --accent:#2FE0C4; --ok:#22C55E; --err:#F87171;}
+  *{box-sizing:border-box; margin:0; padding:0;}
+  [hidden]{display:none !important;}
+  body{background:var(--bg); color:var(--text); font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; line-height:1.55; padding:28px 18px 80px;}
+  .wrap{max-width:980px; margin:0 auto;}
+  h1{font-size:26px; margin-bottom:6px;}
+  .sub{color:var(--dim); margin-bottom:22px;}
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:22px;}
+  button, .btn{font:inherit; cursor:pointer; border:1px solid var(--line); background:var(--panel2); color:var(--text); border-radius:10px; padding:10px 16px; font-weight:600;}
+  button:hover{border-color:var(--accent);}
+  .primary{background:var(--accent); color:#04231D; border-color:var(--accent);}
+  .steps{margin:14px 0 18px 20px; color:var(--dim);}
+  .steps li{margin-bottom:6px;}
+  .steps b{color:var(--text);}
+  #status{position:sticky; top:10px; z-index:5; margin:0 0 16px; padding:11px 15px; border-radius:10px; font-weight:600; background:var(--panel2); border:1px solid var(--line);}
+  #status.ok{border-color:var(--ok); color:var(--ok);}
+  #status.err{border-color:var(--err); color:var(--err);}
+  .bar{display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin-bottom:18px; color:var(--dim);}
+  .bar label{display:flex; gap:8px; align-items:center; cursor:pointer;}
+  .prod{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:16px 18px; margin-bottom:14px;}
+  .prod h2{font-size:16px; display:flex; justify-content:space-between; gap:10px; margin-bottom:12px;}
+  .prod h2 span{color:var(--dim); font-weight:500; font-size:13px;}
+  .tiles{display:flex; flex-wrap:wrap; gap:12px; align-items:flex-start;}
+  .tile{width:116px; background:var(--panel2); border:1px solid var(--line); border-radius:10px; overflow:hidden;}
+  .tile .pic{position:relative; width:116px; height:116px; background:#0b0f22; display:flex; align-items:center; justify-content:center; font-size:12px; color:var(--err); text-align:center; padding:6px;}
+  .tile img{width:100%; height:100%; object-fit:cover; display:block;}
+  .tile .tag{position:absolute; top:6px; left:6px; background:rgba(0,0,0,.7); font-size:11px; font-weight:700; border-radius:6px; padding:2px 7px;}
+  .tile .acts{display:flex;}
+  .tile .acts button{flex:1; border:none; border-top:1px solid var(--line); border-radius:0; padding:7px 0; background:transparent; font-size:14px;}
+  .tile .acts button:hover{background:var(--line);}
+  .tile .acts .del:hover{color:var(--err);}
+  .add{width:116px; height:116px; border:2px dashed var(--line); background:transparent; border-radius:10px; color:var(--dim); font-size:13px; display:flex; flex-direction:column; gap:4px; align-items:center; justify-content:center;}
+  .add:hover{border-color:var(--accent); color:var(--accent);}
+  .add big{font-size:28px; line-height:1;}
+  .full{color:var(--dim); font-size:13px; align-self:center;}
+  .note{color:var(--dim); font-size:13px; margin-top:22px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Photo manager</h1>
+  <p class="sub">Add, reorder and remove product photos. No file names to type.</p>
+
+  <div id="setup" class="card">
+    <b>Start here (one time each visit)</b>
+    <ol class="steps">
+      <li>Click <b>Choose my site folder</b> below.</li>
+      <li>Select the folder that contains <b>index.html</b> (your <b>site</b> folder), then click <b>View files</b> and <b>Allow</b> when the browser asks to save changes.</li>
+      <li>Then use <b>+ Add photos</b> under any product.</li>
+    </ol>
+    <button id="pickBtn" class="primary">Choose my site folder</button>
+    <p id="unsupported" class="note" hidden>This page needs <b>Google Chrome</b> or <b>Microsoft Edge</b> on a computer. Please open it there.</p>
+  </div>
+
+  <div id="app" hidden>
+    <div id="status">Ready.</div>
+    <div class="bar">
+      <label><input type="checkbox" id="resize" checked> Make big photos smaller automatically (recommended, keeps the website fast)</label>
+    </div>
+    <div id="list"></div>
+    <p class="note">The first photo of each product is the one shown on the shop. The other photos show as thumbnails on the product page (up to 6). Use ◀ ▶ to change the order. ✕ removes a photo from the product (the file stays in your folder). After any change, refresh your website with <b>Ctrl + F5</b>.</p>
+  </div>
+</div>
+
+<script>
+/*PURE-START*/
+const MAX_PHOTOS = 6;
+const PRODUCT_NAMES = {
+  "iphone-15-pro-max": "iPhone 15 Pro Max 256GB",
+  "iphone-15": "iPhone 15 128GB",
+  "iphone-14-pro-max": "iPhone 14 Pro Max 256GB",
+  "iphone-13-pro": "iPhone 13 Pro 256GB",
+  "iphone-13-pro-max": "iPhone 13 Pro Max 256GB",
+  "iphone-12": "iPhone 12 128GB",
+  "iphone-se": "iPhone SE 64GB",
+  "iphone-11-pro": "iPhone 11 Pro 256GB",
+  "airpods-pro-2": "AirPods Pro 2",
+  "magsafe-charger": "MagSafe Charger",
+  "silicone-case": "Silicone Case",
+  "usb-c-charger": "USB-C Fast Charger"
+};
+function buildJs(map, order){
+  const lines = order.map(id => '  ' + JSON.stringify(id) + ': ' + JSON.stringify(map[id] || []) + ',  // ' + (PRODUCT_NAMES[id] || id));
+  return [
+    '/* PRODUCT PHOTOS',
+    '   This file is updated automatically by admin.html (the Photo manager).',
+    '   You can also edit it by hand: put the photo file names (from the folder',
+    '   images/products/) inside the [ ] of a product. First photo = shop card photo. */',
+    '',
+    'const PRODUCT_IMAGES = {',
+    lines.join('\n'),
+    '};',
+    ''
+  ].join('\n');
+}
+function parseJs(text){
+  return new Function(text + '\nreturn PRODUCT_IMAGES;')() || {};
+}
+/*PURE-END*/
+
+let rootDir = null, imagesDir = null, productsDir = null;
+let map = {}, order = [], urls = [];
+const $ = id => document.getElementById(id);
+
+function setStatus(msg, kind){ const s = $('status'); s.textContent = msg; s.className = kind || ''; }
+
+if (!window.showDirectoryPicker) { $('unsupported').hidden = false; $('pickBtn').disabled = true; }
+
+$('pickBtn').addEventListener('click', async () => {
+  try { rootDir = await window.showDirectoryPicker({ mode: 'readwrite' }); } catch (e) { return; }
+  await loadFolder();
+});
+
+async function loadFolder(){
+  try { await rootDir.getFileHandle('index.html'); }
+  catch (e) { alert('index.html was not found in that folder.\nPlease choose the folder that contains index.html (your "site" folder).'); rootDir = null; return; }
+  imagesDir = await rootDir.getDirectoryHandle('images', { create: true });
+  productsDir = await imagesDir.getDirectoryHandle('products', { create: true });
+  let text = '';
+  try { text = await (await (await imagesDir.getFileHandle('images.js')).getFile()).text(); } catch (e) {}
+  map = {};
+  if (text) { try { map = parseJs(text); } catch (e) { alert('images/images.js could not be read, so this will start with an empty list.'); map = {}; } }
+  order = Array.from(new Set(Object.keys(PRODUCT_NAMES).concat(Object.keys(map))));
+  order.forEach(id => { if (!Array.isArray(map[id])) map[id] = []; });
+  $('setup').hidden = true; $('app').hidden = false;
+  setStatus('Folder connected. Pick a product and click + Add photos.', 'ok');
+  await render();
+}
+
+async function saveJs(){
+  const fh = await imagesDir.getFileHandle('images.js', { create: true });
+  const w = await fh.createWritable();
+  await w.write(buildJs(map, order));
+  await w.close();
+}
+
+async function exists(name){ try { await productsDir.getFileHandle(name); return true; } catch (e) { return false; } }
+async function freeName(id, ext){
+  for (let n = 1; ; n++) {
+    const name = n === 1 ? id + '.' + ext : id + '-' + n + '.' + ext;
+    if (!map[id].includes(name) && !(await exists(name))) return name;
+  }
+}
+
+async function shrink(file){
+  try {
+    const bmp = await createImageBitmap(file);
+    const s = Math.min(1, 1600 / Math.max(bmp.width, bmp.height));
+    const w = Math.round(bmp.width * s), h = Math.round(bmp.height * s);
+    const c = document.createElement('canvas'); c.width = w; c.height = h;
+    const ctx = c.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, w, h); ctx.drawImage(bmp, 0, 0, w, h);
+    return await new Promise(res => c.toBlob(res, 'image/jpeg', 0.85));
+  } catch (e) { return null; }
+}
+
+async function addFiles(id, fileList){
+  const files = Array.from(fileList);
+  const room = MAX_PHOTOS - map[id].length;
+  if (room <= 0) { setStatus('This product already has ' + MAX_PHOTOS + ' photos. Remove one first.', 'err'); return; }
+  let added = 0, skipped = 0;
+  setStatus('Adding photos…');
+  for (const file of files.slice(0, room)) {
+    let blob = file, ext = (file.name.split('.').pop() || '').toLowerCase();
+    if ($('resize').checked) { const small = await shrink(file); if (small) { blob = small; ext = 'jpg'; } }
+    if (!['jpg', 'jpeg', 'png', 'webp'].includes(ext)) { skipped++; continue; }
+    const name = await freeName(id, ext);
+    const fh = await productsDir.getFileHandle(name, { create: true });
+    const w = await fh.createWritable(); await w.write(blob); await w.close();
+    map[id].push(name); added++;
+  }
+  await saveJs();
+  await render();
+  let msg = added + ' photo(s) added to ' + (PRODUCT_NAMES[id] || id) + '. Refresh your website with Ctrl + F5.';
+  if (files.length > room) msg += ' Only ' + MAX_PHOTOS + ' photos fit, the rest were skipped.';
+  if (skipped) msg += ' ' + skipped + ' file(s) skipped (use JPG, PNG or WEBP).';
+  setStatus(msg, skipped ? 'err' : 'ok');
+}
+
+async function change(id, fn){ fn(map[id]); await saveJs(); await render(); setStatus('Saved. Refresh your website with Ctrl + F5.', 'ok'); }
+
+async function render(){
+  urls.forEach(u => URL.revokeObjectURL(u)); urls = [];
+  const list = $('list'); list.innerHTML = '';
+  for (const id of order) {
+    const sec = document.createElement('section'); sec.className = 'prod';
+    const h = document.createElement('h2');
+    h.innerHTML = '<div></div><span></span>';
+    h.firstChild.textContent = PRODUCT_NAMES[id] || id;
+    h.lastChild.textContent = map[id].length + ' / ' + MAX_PHOTOS + ' photos';
+    sec.appendChild(h);
+    const tiles = document.createElement('div'); tiles.className = 'tiles';
+    for (let i = 0; i < map[id].length; i++) {
+      const name = map[id][i];
+      const tile = document.createElement('div'); tile.className = 'tile';
+      const pic = document.createElement('div'); pic.className = 'pic';
+      try {
+        const f = await (await productsDir.getFileHandle(name)).getFile();
+        const u = URL.createObjectURL(f); urls.push(u);
+        const img = document.createElement('img'); img.src = u; img.alt = name; pic.appendChild(img);
+      } catch (e) { pic.textContent = 'File not found: ' + name; }
+      const tag = document.createElement('span'); tag.className = 'tag'; tag.textContent = i === 0 ? 'Main' : String(i + 1); pic.appendChild(tag);
+      const acts = document.createElement('div'); acts.className = 'acts';
+      const left = document.createElement('button'); left.textContent = '◀'; left.title = 'Move earlier'; left.disabled = i === 0;
+      left.onclick = () => change(id, a => { const t = a[i]; a[i] = a[i - 1]; a[i - 1] = t; });
+      const right = document.createElement('button'); right.textContent = '▶'; right.title = 'Move later'; right.disabled = i === map[id].length - 1;
+      right.onclick = () => change(id, a => { const t = a[i]; a[i] = a[i + 1]; a[i + 1] = t; });
+      const del = document.createElement('button'); del.className = 'del'; del.textContent = '✕'; del.title = 'Remove from this product';
+      del.onclick = () => { if (confirm('Remove this photo from the product?\n(The file stays in your folder.)')) change(id, a => { a.splice(i, 1); }); };
+      acts.append(left, right, del);
+      tile.append(pic, acts); tiles.appendChild(tile);
+    }
+    if (map[id].length < MAX_PHOTOS) {
+      const add = document.createElement('button'); add.className = 'add'; add.innerHTML = '<big>+</big>Add photos';
+      const input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*'; input.multiple = true; input.hidden = true;
+      input.onchange = () => { if (input.files.length) addFiles(id, input.files); };
+      add.onclick = () => input.click();
+      tiles.append(add, input);
+    } else {
+      const full = document.createElement('div'); full.className = 'full'; full.textContent = 'Maximum photos reached.'; tiles.appendChild(full);
+    }
+    sec.appendChild(tiles); list.appendChild(sec);
+  }
+}
+</script>
+</body>
+</html>
