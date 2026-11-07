@@ -390,10 +390,9 @@ function renderDynamic(lang){
       <div class="body">
         <div class="cat">${p.cat}</div>
         <h3><a href="product.html?id=${p.id}">${p.name}</a></h3>
-        <div class="pricerow">
-          <span class="price">${p.price}</span>
-          <button type="button" class="plus" data-name="${p.name.replace(/"/g,'&quot;')}" data-price="${p.price.replace(/"/g,'&quot;')}" aria-label="Add to cart">${ICONS.plus}</button>
-        </div>
+       <div class="pricerow">
+  <button type="button" class="plus" data-name="${p.name.replace(/"/g,'&quot;')}" aria-label="Add to cart">${ICONS.plus}</button>
+</div>
       </div>
     </div>
   `).join("");
@@ -567,7 +566,7 @@ function renderCart(){
   } else {
     list.innerHTML = cart.map((i, idx) => `
       <div class="cart-item">
-        <div><div class="cn">${i.name}</div><div class="cp">${i.price} × ${i.qty}</div></div>
+        <div><div class="cn">${i.name}</div><div class="cp">× ${i.qty}</div></div>
         <button class="cart-remove" type="button" data-idx="${idx}" aria-label="Remove">&times;</button>
       </div>
     `).join("");

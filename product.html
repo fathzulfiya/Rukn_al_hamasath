@@ -412,7 +412,7 @@ function renderDynamic(lang){
     <div class="pdp-info">
       <div class="cat">${product.cat}</div>
       <h1>${product.name}</h1>
-      <div class="price">${product.price}</div>
+   
       <div class="pdp-badges">
         <span class="tag ${product.badge}">${badgeLabel}</span>
         <span class="stock-pill">${t.inStock}</span>
@@ -435,7 +435,7 @@ function renderDynamic(lang){
   `;
 
   document.getElementById("pdpAddToCart").addEventListener("click", (e) => {
-    addToCart(product.name, product.price);
+       addToCart(product.name);
     const btn = e.currentTarget;
     const label = btn.querySelector("span");
     const original = label.textContent;
@@ -662,7 +662,7 @@ function renderCart(){
   } else {
     list.innerHTML = cart.map((i, idx) => `
       <div class="cart-item">
-        <div><div class="cn">${i.name}</div><div class="cp">${i.price} × ${i.qty}</div></div>
+        <div><div class="cn">${i.name}</div><div class="cp">× ${i.qty}</div></div>
         <button class="cart-remove" type="button" data-idx="${idx}" aria-label="Remove">&times;</button>
       </div>
     `).join("");
