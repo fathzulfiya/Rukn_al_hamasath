@@ -548,14 +548,7 @@ function renderDynamic(lang){
       </div>
     </div>
   `).join("");
-  wireCardImages(document.getElementById("productGrid"));
-  document.querySelectorAll("#productGrid .plus").forEach(btn => {
-    btn.addEventListener("click", () => {
-      addToCart(btn.getAttribute("data-name"), btn.getAttribute("data-price"));
-      btn.classList.add("added");
-      setTimeout(() => btn.classList.remove("added"), 700);
-    });
-  });
+  try { wireCardImages(document.getElementById("productGrid")); } catch (e) {}
 
   const categories = [
     {icon:"phoneNew", title:t.catNewTitle, desc:t.catNewDesc, href:"shop.html?category=new"},
@@ -654,21 +647,65 @@ mobileMenu.querySelectorAll(".menu-links a").forEach(a => a.addEventListener("cl
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeMenu(); });
 window.addEventListener("resize", () => { if (window.innerWidth > 900) closeMenu(); });
 
-function getCart(){ try{ return JSON.parse(localStorage.getItem("rah_cart") || "[]"); } catch(e){ return []; } }
-function saveCart(cart){ try{ localStorage.setItem("rah_cart", JSON.stringify(cart)); } catch(e){} }
+const ADDED_MSG = {en:"Added to cart", ar:"تمت الإضافة إلى السلة", ml:"കാർട്ടിൽ ചേർത്തു"};
+const STORAGE_MSG = {en:"Your browser blocks saving, so the cart will reset when you change page.", ar:"المتصفح يمنع الحفظ، لذلك ستفرغ السلة عند تغيير الصفحة.", ml:"ബ്രൗസർ സേവ് ചെയ്യുന്നത് തടയുന്നു, പേജ് മാറ്റുമ്പോൾ കാർട്ട് ശൂന്യമാകും."};
+function showToast(msg, isError){
+  let t = document.getElementById("rahToast");
+  if (!t) {
+    t = document.createElement("div"); t.id = "rahToast";
+    t.style.cssText = "position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#131832;color:#EDEFF7;border:1px solid #2FE0C4;padding:10px 16px;border-radius:10px;font-weight:600;font-size:14px;z-index:200;max-width:90vw;text-align:center;box-shadow:0 8px 22px rgba(0,0,0,.5);transition:opacity .2s;pointer-events:none;opacity:0";
+    document.body.appendChild(t);
+  }
+  t.style.borderColor = isError ? "#F87171" : "#2FE0C4";
+  t.textContent = msg; t.style.opacity = "1";
+  clearTimeout(t._h); t._h = setTimeout(() => { t.style.opacity = "0"; }, 2200);
+}
+// The cart lives in memory while the page is open, and is also saved in the browser when allowed
+let memoryCart = (function(){
+  const parse = s => { try { const v = JSON.parse(s); return Array.isArray(v) ? v : null; } catch (e) { return null; } };
+  try { const v = parse(localStorage.getItem("rah_cart")); if (v) return v; } catch (e) {}
+  try { const v = parse(sessionStorage.getItem("rah_cart")); if (v) return v; } catch (e) {}
+  try { if (window.name.indexOf("rah_cart=") === 0) { const v = parse(window.name.slice(9)); if (v) return v; } } catch (e) {}
+  return [];
+})();
+function getCart(){ return memoryCart; }
+function saveCart(cart){
+  memoryCart = cart;
+  const data = JSON.stringify(cart);
+  let stored = false;
+  try { localStorage.setItem("rah_cart", data); stored = true; } catch (e) {}
+  try { sessionStorage.setItem("rah_cart", data); stored = true; } catch (e) {}
+  // last resort when the browser blocks all storage: keep the cart in the tab so it survives page changes
+  if (!stored) { try { window.name = "rah_cart=" + data; stored = true; } catch (e) {} }
+  return stored;
+}
 function addToCart(name, price){
-  const cart = getCart();
-  const existing = cart.find(i => i.name === name);
-  if (existing) existing.qty++; else cart.push({name, price, qty:1});
-  saveCart(cart);
-  renderCart();
+  try {
+    const cart = getCart().slice();
+    const existing = cart.find(i => i.name === name);
+    if (existing) existing.qty++; else cart.push({name, price, qty:1});
+    const stored = saveCart(cart);
+    renderCart();
+    if (stored) showToast(ADDED_MSG[currentLang] || ADDED_MSG.en);
+    else showToast((ADDED_MSG[currentLang] || ADDED_MSG.en) + " - " + (STORAGE_MSG[currentLang] || STORAGE_MSG.en), true);
+  } catch (e) { showToast("Cart error: " + e.message, true); }
 }
 function removeFromCart(idx){
-  const cart = getCart();
-  cart.splice(idx, 1);
-  saveCart(cart);
-  renderCart();
+  try {
+    const cart = getCart().slice();
+    cart.splice(idx, 1);
+    saveCart(cart);
+    renderCart();
+  } catch (e) { showToast("Cart error: " + e.message, true); }
 }
+// One listener for every "+" button (works after the product list is redrawn)
+document.addEventListener("click", e => {
+  const btn = e.target.closest && e.target.closest(".plus");
+  if (!btn) return;
+  addToCart(btn.getAttribute("data-name"), btn.getAttribute("data-price"));
+  btn.classList.add("added");
+  setTimeout(() => btn.classList.remove("added"), 700);
+});
 function cartMessage(){
   const cart = getCart();
   const t = translations[currentLang];
@@ -701,8 +738,17 @@ const cartBtn = document.getElementById("cartBtn");
 const cartDrawer = document.getElementById("cartDrawer");
 const cartOverlay = document.getElementById("cartOverlay");
 const cartCloseBtn = document.getElementById("cartCloseBtn");
-cartBtn.addEventListener("click", () => { cartDrawer.classList.add("open"); cartOverlay.classList.add("open"); });
-function closeCart(){ cartDrawer.classList.remove("open"); cartOverlay.classList.remove("open"); }
+function openCart(){
+  if (typeof closeMenu === "function") closeMenu();
+  cartDrawer.classList.add("open"); cartOverlay.classList.add("open");
+  document.documentElement.classList.add("cart-open");
+}
+function closeCart(){
+  cartDrawer.classList.remove("open"); cartOverlay.classList.remove("open");
+  document.documentElement.classList.remove("cart-open");
+}
+cartBtn.addEventListener("click", openCart);
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeCart(); });
 cartCloseBtn.addEventListener("click", closeCart);
 cartOverlay.addEventListener("click", closeCart);
 

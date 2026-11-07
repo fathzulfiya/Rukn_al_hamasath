@@ -979,10 +979,10 @@ body[dir="rtl"] .shop-search input {
   color: #5FE3A8;
 }
 
-.tag.used {
-  background: #3A2E10;
-  color: #E8B95C;
-}
+/* .tag.used {
+  background:transparent;
+  color: transparent;
+} */
 
 .pcard .body {
   padding: 16px 0px 18px;
@@ -1896,9 +1896,30 @@ body.lang-ml .foot-brand h3 {
     object-fit: contain;
     z-index: 1;
 }
-.strip-row .items span {
- 
-  padding: 5px 0px;
 }
 
+/* cart drawer on phones: full visible height (browser bars), no page scroll behind it, not tappable while closed */
+.cart-drawer {
+  height: 100vh;
+  height: 100dvh;
+  bottom: auto;
+  visibility: hidden;
+  transition: transform 0.25s ease, visibility 0.25s;
+}
+
+.cart-drawer.open {
+  visibility: visible;
+}
+
+.cart-foot {
+  padding-bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+}
+
+html.cart-open {
+  overflow: hidden;
+}
+
+.cart-btn {
+  min-width: 40px;
+  min-height: 40px;
 }

@@ -24,6 +24,16 @@
    ===================================================================== */
 
 const PRODUCT_IMAGES = {
+   "iphone-13-pro-max": ["13-pro-max.jpg"],  // iPhone 15 Pro Max 256GB
+  "iphone-17":         ["17-iphone.jpg"],                                                                                          // iPhone 15 128GB
+  "iphone-15-pro-max": ["15promax.jpg"],                                                                                                           // iPhone 14 Pro Max 256GB
+  "iphone-16-pro":     ["16pro.jpg"],                                                                                                           // iPhone 13 Pro 256GB
+  "iphone-17-pro-max": ["17promax.jpg"],                                                                                                           // iPhone 13 Pro Max 256GB
+  "s23":         ["s23.jpg"], 
+  "galaxy-z": ["galaxyz.jpg"],                                                                                                           // iPhone 13 Pro Max 256GB
+  
+  "17-pro":         ["17pro.jpg"],      
+  // 
   "iphone-15-pro-max": ["iphone-15-pro-max.jpg", "iphone-15-pro-max-2.jpg", "iphone-15-pro-max-3.jpg", "iphone-15-pro-max-4.jpg"],  // iPhone 15 Pro Max 256GB
   "iphone-15":         ["iphone-15-2.jpg"],                                                                                          // iPhone 15 128GB
   "iphone-14-pro-max": ["iphone-12.jpg","iphone-12-2.jpg  "],                                                                                                           // iPhone 14 Pro Max 256GB
